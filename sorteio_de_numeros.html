@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sorteio de Números</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .globo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: #3498db;
+      position: relative;
+      margin: 0 auto;
+      margin-top: 50px;
+      animation: rotate 3s infinite linear;
+    }
+
+    .globo:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    .icon-sortear:before {
+      content: "🎉";
+      font-size: 60px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    h1 {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+    }
+
+    .formulario {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .resultado {
+      text-align: center;
+      font-size: 24px;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    .parabens-toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #f1c40f;
+      color: #fff;
+      font-size: 24px;
+      border-radius: 10px;
+      animation: animateToast 3s ease-in-out;
+      z-index: 9999;
+    }
+
+    @keyframes animateToast {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="https://t.me/VEM_BRABO">SORTEIO DE NÚMEROS</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1 class="mt-5">INÍCIO DO SORTEIO </h1>
+
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="globo">
+            <div class="icon-sortear"></div>
+          </div>
+
+          <form class="formulario mt-4">
+            <div class="mb-3">
+              <label for="minimo" class="form-label">Mínimo - N° 1</label>
+              <input type="number" class="form-control" id="minimo">
+            </div>
+            <div class="mb-3">
+              <label for="maximo" class="form-label">Máximo - N° 100</label>
+              <input type="number" class="form-control" id="maximo">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="sortearNumero()">Sortear</button>
+          </form>
+
+          <div class="resultado">
+            O número sorteado é: <span id="numeroSorteado"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function sortearNumero() {
+      var minimo = parseInt(document.getElementById("minimo").value);
+      var maximo = parseInt(document.getElementById("maximo").value);
+
+      if (isNaN(minimo) || isNaN(maximo)) {
+        alert("Por favor, insira valores válidos.");
+        return;
+      }
+
+      var numeroSorteado = Math.floor(Math.random() * (maximo - minimo + 1)) + minimo;
+      document.getElementById("numeroSorteado").textContent = numeroSorteado;
+      document.querySelector(".resultado").style.display = "block";
+
+      var toast = document.createElement("div");
+      toast.classList.add("parabens-toast");
+      toast.textContent = "Parabéns! Você Ganhou!";
+      document.body.appendChild(toast);
+    }
+  </script>
+</body>
+</html>
